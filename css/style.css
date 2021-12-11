@@ -8,8 +8,8 @@ html {
     font-family: 'Russo One', sans-serif;
 }
 body{
-    background-image: linear-gradient(to bottom, #4f1e8e, #5e249c, #6e2aa9, #7e31b7, #8e37c5, #883ac3, #823dc0, #7d40bd, #633ea7, #4c3991, #383379, #292c61);
-    background-repeat: no-repeat;
+    background-image: url(../assets/background.jpg);
+    
     
 }
 main{
@@ -32,7 +32,7 @@ main{
     transform: scaleX(-1);
 }
 
-.score, .nextPiece, .line{
+.score, .nextPiece{
     border: 5px solid rgb(255, 255, 255);
     border-radius: 5px;
     background-color: rgb(0, 0, 0);
