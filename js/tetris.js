@@ -3,7 +3,7 @@ let canvas = document.getElementById("tetris")
 let ctx = canvas.getContext("2d")
 
 // paint canvas
-ctx.fillStyle = "red"
+ctx.fillStyle = "black"
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 
