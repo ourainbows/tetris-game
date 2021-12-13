@@ -37,17 +37,36 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     // draw a figure 
     drawPiece(piece.posX, piece.posY)
-    piece.posY++
+    //piece.posY++
 }
 
-function update() {
+/* function update() {
     //draw()
     //requestAnimationFrame(update)
     setInterval(function () {
         draw()
     }, 1000 / 1)
+} */
+
+let dropCounter = 0;
+let dropInterval = 1000;
+
+let lastTime = 0;
+function update(time = 0) {
+    const deltaTime = time - lastTime;
+    lastTime = time;
+
+    dropCounter += deltaTime;
+    if (dropCounter > dropInterval) {
+        piece.posY++;
+        dropCounter = 0
+    }
+
+
+    draw();
+    requestAnimationFrame(update);
 }
-update()
+update() 
 
 /*This function create the 7 pieces of tetris
     PieceName -> A vowel to select one figure
