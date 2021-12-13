@@ -32,16 +32,15 @@ function handleTouch(start, end, cbL, cbR) {
 
 //writing the callback fn()
 let left = () => {
-    console.log("izquierda")
+    pieceMove(-1)
 }
 let right = () => {
-    console.log("derecha")
+    pieceMove(+1)
 }
 let up = () => {
-    console.log("arriba")
 }
 let down = () => {
-    console.log("abajo")
+    pieceDrop();
 }
 let touch = () => {
     console.log("Just Touch")

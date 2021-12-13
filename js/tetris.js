@@ -96,14 +96,6 @@ function draw() {
     //piece.posY++
 }
 
-/* function update() {
-    //draw()
-    //requestAnimationFrame(update)
-    setInterval(function () {
-        draw()
-    }, 1000 / 1)
-} */
-
 /*This function makes resetting the time to zero so that when we lower the handpiece 
  it takes a second to lower*/
 function pieceDrop() {
@@ -124,6 +116,7 @@ function pieceMove (dir){
     if (collide(arena, piece))
     piece.posX -= dir;
 }
+
 let dropCounter = 0;
 let dropInterval = 1000;
 let lastTime = 0;
@@ -141,31 +134,6 @@ function update(time = 0) {
     requestAnimationFrame(update);
 }
 update()
-
-//down piece and restar drop counter
-function pieceDrop() {
-    piece.posY++
-    dropCounter = 0
-}
-
-document.addEventListener("keydown", function (key) {
-    console.log(key.key)
-    if (key.key == "ArrowUp") {
-        //Piece.rotate
-    }
-    if (key.key == "ArrowDown") {
-       pieceDrop()
-    }
-    if (key.key == "ArrowLeft") {
-        //Piece.left()
-        piece.posX--
-    }
-    if (key.key == "ArrowRight") {
-        //Piece.right()
-        piece.posX++
-    }
-})
-
 
 
 /*This function create the 7 pieces of tetris
@@ -221,8 +189,7 @@ function createPiece(pieceName) {
 }
 
 
-document.addEventListener("keydown", function (key) {
-    console.log(key.key)
+document.addEventListener("keydown", function (key) { 
     if (key.key == "ArrowUp") {
         //Piece.rotate
     }
@@ -241,13 +208,4 @@ document.addEventListener("keydown", function (key) {
     }
 
 
-})
-
-
-
-
-
-// touch
-canvas.addEventListener("touchstart", function () {
-    //rotate piece
 })
