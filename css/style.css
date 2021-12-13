@@ -8,7 +8,6 @@ html {
     font-family: 'Russo One', sans-serif;
 }
 body{
-
     background-image: url("../assets/background-tetris.jpg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -31,9 +30,6 @@ main{
 .canvas-crane{
     width: 5vw;
     height: 5vw;
-}
-.crane-mirror{
-    transform: scaleX(-1);
 }
 
 
