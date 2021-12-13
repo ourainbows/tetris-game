@@ -6,6 +6,7 @@ let ctx = canvas.getContext("2d")
 ctx.scale(20, 20)
 
 
+let board = createMatrix(12, 20)
 
 let piece = {
     posX: 0,
@@ -17,6 +18,19 @@ const matrix = [
     [1, 1, 1],
     [0, 1, 0]
 ]
+function createMatrix(width, height) {
+    let matrix = []
+    while (height != 0) {
+        matrix.push(new Array(width).fill(0))
+        height--
+    }
+    return matrix
+}
+
+//This function copy the piece on the board
+function merge(board, piece) {
+    
+}
 
 //Offset parameters help to change the position of x and y where piece appears
 function drawPiece(offsetX,offetY) {
@@ -50,7 +64,6 @@ function draw() {
 
 let dropCounter = 0;
 let dropInterval = 1000;
-
 let lastTime = 0;
 function update(time = 0) {
     const deltaTime = time - lastTime;
@@ -58,8 +71,7 @@ function update(time = 0) {
 
     dropCounter += deltaTime;
     if (dropCounter > dropInterval) {
-        piece.posY++;
-        dropCounter = 0
+        pieceDrop()
     }
 
 
@@ -67,6 +79,32 @@ function update(time = 0) {
     requestAnimationFrame(update);
 }
 update() 
+
+//down piece and restar drop counter
+function pieceDrop() {
+    piece.posY++
+    dropCounter = 0
+}
+
+document.addEventListener("keydown", function (key) {
+    console.log(key.key)
+    if (key.key == "ArrowUp") {
+        //Piece.rotate
+    }
+    if (key.key == "ArrowDown") {
+       pieceDrop()
+    }
+    if (key.key == "ArrowLeft") {
+        //Piece.left()
+        piece.posX--
+    }
+    if (key.key == "ArrowRight") {
+        //Piece.right()
+        piece.posX++
+    }
+})
+
+
 
 /*This function create the 7 pieces of tetris
     PieceName -> A vowel to select one figure
@@ -119,30 +157,6 @@ function createPiece(pieceName) {
             ]
     }
 }
-
-
-document.addEventListener("keydown", function (key) {
-    console.log(key.key)
-    if (key.key == "ArrowUp") {
-        //Piece.rotate
-    }
-    if (key.key == "ArrowDown") {
-        //Piece.down
-        piece.posY++
-    }
-    if (key.key == "ArrowLeft") {
-        //Piece.left()
-        piece.posX--
-    }
-    if (key.key == "ArrowRight") {
-        //Piece.right()
-        piece.posX++
-    }
-})
-
-
-
-
 
 // touch
 canvas.addEventListener("touchstart", function () {
