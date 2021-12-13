@@ -17,25 +17,12 @@ function arenaSweep() {
     }
 }
 
-
-function createMatrix(width, height) {
-    let matrix = []
-    while (height != 0) {
-        matrix.push(new Array(width).fill(0))
-        height--
-    }
-    return matrix
-}
-
-
 let piece = {
     posX: 0,
     posY: 0,
-    matrix: createPiece("I"),
+    matrix:null,
     score: 0,
 }
-
-
 
 const arena = createMatrix(12, 20);
 
@@ -75,70 +62,6 @@ function drawPiece(matrix, offsetX, offsetY) {
     }
 }
 
-//This fuction returns de posicion of the piece en the arena 
-function merge (arena, piece) {
-    for (y = 0; y < piece.matrix.length; y++) {
-        for (x = 0; x < piece.matrix[y].length; x++) {
-            if (piece.matrix[y][x] != 0) {
-                arena[y + piece.posY][x + piece.posX] = piece.matrix[y][x];
-            }
-        }
-    }
-}
-
-
-// draw
-function draw() {
-    // paint canvas
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // make sticky the falling pieces when they collide 
-    //with the floor or with another piece
-    drawPiece(arena, 0 , 0);
-    // draw a figure 
-    drawPiece(piece.matrix, piece.posX, piece.posY);
-    //piece.posY++
-}
-
-/*This function makes resetting the time to zero so that when we lower the handpiece 
- it takes a second to lower*/
-function pieceDrop() {
-    piece.posY++;
-    if (collide(arena, piece)) {
-        piece.posY--;
-        merge (arena,piece)
-        piece.posY = 0
-    }
-
-    dropCounter = 0;
-
-}
-//this one move the piece and detected if we collide with the sides
-//(if we collide with the sides we go back to the last position)
-function pieceMove (dir){
-    piece.posX += dir;
-    if (collide(arena, piece))
-    piece.posX -= dir;
-}
-
-let dropCounter = 0;
-let dropInterval = 1000;
-let lastTime = 0;
-function update(time = 0) {
-    const deltaTime = time - lastTime;
-    lastTime = time;
-
-    dropCounter += deltaTime;
-    if (dropCounter > dropInterval) {
-        pieceDrop()
-    }
-
-
-    draw();
-    requestAnimationFrame(update);
-}
-update()
 
 
 /*This function create the 7 pieces of tetris
@@ -193,12 +116,6 @@ function createPiece(pieceName) {
     }
 }
 
-
-
-
-const arena = createMatrix(12, 20);
-
-
 //this function detected if we touch the floor 
 function collide(arena, piece) {
     const [m, o, a] = [piece.matrix, piece.posY, piece.posX];
@@ -221,17 +138,6 @@ function createMatrix(w, h) {
     }
     return matrix;
 
-}
-//Offset parameters help to change the position of x and y where piece appears
-function drawPiece(matrix, offsetX, offsetY) {
-    for (y = 0; y < matrix.length; y++) {
-        for (x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] != 0) {
-                ctx.fillStyle = "red"
-                ctx.fillRect(x + offsetX, y + offsetY, 1, 1)
-            }
-        }
-    }
 }
 
 //This fuction returns de posicion of the piece en the arena 
@@ -339,6 +245,8 @@ function rotate(matrix, dir) {
     }
 
 }
+
+
 let dropCounter = 0;
 let dropInterval = 1000;
 
@@ -363,7 +271,6 @@ function updateScore() {
 
 
 document.addEventListener("keydown", function (key) {
-    console.log(key.key)
     if (key.key == "ArrowUp") {
         //Piece.rotate
         pieceRotate(-1)
