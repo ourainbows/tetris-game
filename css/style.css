@@ -7,11 +7,11 @@ html {
   font-size: 62.5%;
   font-family: "Russo One", sans-serif;
 }
-body {
-  background-image: url(../assets/background-tetris.jpg);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-color: #660066;
+body{
+    background-image: url("../assets/background-tetris.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
 }
 
 main {
