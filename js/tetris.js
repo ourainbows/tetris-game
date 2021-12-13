@@ -158,7 +158,3 @@ function createPiece(pieceName) {
     }
 }
 
-// touch
-canvas.addEventListener("touchstart", function () {
-    //rotate piece
-})
