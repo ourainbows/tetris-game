@@ -8,13 +8,9 @@ html {
     font-family: 'Russo One', sans-serif;
 }
 body{
-<<<<<<< HEAD
-    background-image: url("../assets/background-tetris.jpg");
+    background-image: url(../assets/background-tetris.jpg);
     background-repeat: no-repeat;
-=======
-    background-image: url(../assets/background.jpg);
-    
->>>>>>> c0e1e4f506b7533bc759cc86f19e5c8b5e50f192
+    background-size: 100%;
     
 }
 main{
@@ -35,15 +31,8 @@ main{
     width: 5vw;
     height: 5vw;
 }
-.crane-mirror{
-    transform: scaleX(-1);
-}
 
-<<<<<<< HEAD
-.score, .nextPiece {
-=======
 .score, .nextPiece{
->>>>>>> c0e1e4f506b7533bc759cc86f19e5c8b5e50f192
     border: 5px solid rgb(255, 255, 255);
     border-radius: 5px;
     background-color: rgb(0, 0, 0);
