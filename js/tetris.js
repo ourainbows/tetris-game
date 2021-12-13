@@ -64,7 +64,7 @@ function drawPiece(matrix, offsetX, offsetY) {
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] != 0) {
-                ctx.fillStyle = "red"
+                ctx.fillStyle = "#D2EA9C"
                 ctx.fillRect(x + offsetX, y + offsetY, 1, 1)
             }
         }
@@ -88,6 +88,7 @@ function draw() {
     // paint canvas
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
     // make sticky the falling pieces when they collide 
     //with the floor or with another piece
     drawPiece(arena, 0 , 0);
