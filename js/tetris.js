@@ -11,7 +11,7 @@ let topScore = 0
 let piecesQuantity = []
 let colorPieces = []
 
-
+//THIS FUCTION MAKES THE MUSIC APPEAR WHEN WE PRESS THE KEYBOARD
 var audio = document.createElement("AUDIO")
 document.body.appendChild(audio);
 audio.src = "audio/Tetris_theme.ogg"
@@ -20,7 +20,7 @@ document.body.addEventListener("keydown", function () {
  
 })
 
-
+//tHIS FUNCTION MAKES THE LINES DESSEAPER WHEN THEY ARE COMPLETE AND MAKE THE COUNTER COUNT THE COMPLETE LINES
 function arenaSweep() {
     let rowCount = 1;
     for (i = 0; i < arena.length; i++) {
@@ -32,17 +32,17 @@ function arenaSweep() {
         }
     }
 }
-
+// THIS VARIABLE MAKES THE PIECE APPEAR IN THE BOTTOM OF THE CANVAS 
 let piece = {
     posX: 0,
     posY: 0,
     matrix: null,
     score: 0,
 }
-
+//THIS CONSTANT CREATES THE ARENA SPACE WITH THE HEIGHT AND WIDTH OF THE TOTAL PIECES THAT FIT IN THE CANVAS
 const arena = createMatrix(12, 20);
 
-
+//THIS FUNCTION FILLS THE SAND WITH 0
 function createMatrix(w, h) {
     const matrix = [];
     while (h != 0) {
@@ -52,6 +52,7 @@ function createMatrix(w, h) {
     return matrix;
 
 }
+//THIS FUNCTION HELP US CHOOSE COLORS RANDOMLY
 function newColor() {
     let clr = color[Math.floor(Math.random() * color.length)]
     colorPieces.push(clr)
@@ -190,7 +191,7 @@ function pieceMove(dir) {
         piece.posX -= dir;
 }
 
-
+//THIS FUNCTION MAKES THE PIECES APPEAR RAMDONLY IN THE CANVAS
 function updateValuePiece() {
     const pieces = 'OITSZLJ';
     let newPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
@@ -205,7 +206,7 @@ function updateValuePiece() {
     piecesQuantity.push(piecesQuantity.length + 1)
     return newPiece
 }
-
+//THIS FUNCTION MAKES A NEW PART APPEAR AFTER THE OTHER HAS TOUCHED THE FLOOR, IN ADDITION TO CHOOSING THE COLORS AND RESTARTING THE GAME IF THE PLAYER LOSES
 function pieceReset() {
     newColor()
     piece.matrix = updateValuePiece();
