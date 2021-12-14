@@ -228,6 +228,7 @@ function pieceReset() {
     }
 }
 
+/* Call function rotate and prevent than the piece out of matrix */
 function pieceRotate(dir) {
 
     const pos = piece.posX;
@@ -244,6 +245,7 @@ function pieceRotate(dir) {
     }
 }
 
+/* Rotates matrix of the piece, with key event you set the direction of rotation */
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; ++y) {
         for (let x = 0; x < y; ++x) {
@@ -273,6 +275,7 @@ let dropCounter = 0;
 let dropInterval = 1000;
 
 let lastTime = 0;
+/* Update canvas one time per second by default */
 function update(time = 0) {
     const deltaTime = time - lastTime;
     lastTime = time;
@@ -287,7 +290,7 @@ function update(time = 0) {
     requestAnimationFrame(update);
 }
 
-
+/* Update score and top score on HTML */
 function updateScore() {
     document.getElementById("score").innerText = "Score: " + piece.score;
     if (piece.score > topScore) {
@@ -296,6 +299,8 @@ function updateScore() {
     level()
 }
 
+/*Change value of variable drop interval depending of your
+score to make the game more hard */
 function level() {
     let score = piece.score
     if (score > 30 && score < 50) {
@@ -313,7 +318,7 @@ function level() {
 }
 
 
-
+// This function add an event listener to move and rotate the pieces
 document.addEventListener("keydown", function (key) {
     audio.loop = true
     audio.volume = 0.1
