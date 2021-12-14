@@ -14,7 +14,6 @@ let colorPieces = []
 let song = document.getElementById("songTetris")
 song.loop = true
 song.volume = 0.1
-console.log(song);
 
 function arenaSweep() {
     let rowCount = 1;
