@@ -10,10 +10,16 @@ let color = ["#FFFF", "#f4a379", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "re
 let topScore = 0
 let piecesQuantity = []
 let colorPieces = []
-//song
-let song = document.getElementById("songTetris")
-song.loop = true
-song.volume = 0.1
+
+
+var audio = document.createElement("AUDIO")
+document.body.appendChild(audio);
+audio.src = "audio/Tetris_theme.ogg"
+
+document.body.addEventListener("keydown", function () {
+ 
+})
+
 
 function arenaSweep() {
     let rowCount = 1;
@@ -311,6 +317,9 @@ function level() {
 
 
 document.addEventListener("keydown", function (key) {
+    audio.loop = true
+    audio.volume = 0.1
+    audio.play()
     if (key.key == "ArrowUp") {
         //Piece.rotate
         pieceRotate(-1)

@@ -50,6 +50,9 @@ let touch = () => {
 window.onload = function () {
     canvas.addEventListener('touchstart', function (event) {
         //console.log(event);
+        audio.loop = true
+        audio.volume = 0.1
+        audio.play()
         startX = event.touches[0].clientX;
         startY = event.touches[0].clientY;
         //console.log(`the start is at X: ${startX}px and the Y is at ${startY}px`)
