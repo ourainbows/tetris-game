@@ -6,14 +6,14 @@ let ctx = canvas.getContext("2d")
 ctx.scale(20, 20)
 
 //colors for pieces
-let color = ["#FFFF", "#f4a379", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "red"]
+let color = ["#F23DE6", "#932CBF", "#F2E205", "#F28705", "#05F240", "#05C7F2", "red"]
 let topScore = 0
 let piecesQuantity = []
 let colorPieces = []
 //song
 let song = document.getElementById("songTetris")
 song.loop = true
-song.volume = 0.1
+song.volume = 0.2
 
 function arenaSweep() {
     let rowCount = 1;

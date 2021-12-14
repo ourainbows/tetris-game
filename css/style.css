@@ -22,8 +22,10 @@ main {
 }
 canvas{
   margin: 0;
+  
   /* set later width and height */
 }
+
 .canvas,
 .score,
 .nextPiece {
@@ -44,6 +46,20 @@ canvas{
   justify-content: center;
   margin-top: 5rem;
   flex-direction: column;
+
+}
+.constructor {
+    width: 55%;
+    height: 70%;
+}
+.nextPiece {
+    display: flex;
+    flex-direction: row;
+}
+
+.next{
+     width: 30%;
+     margin-right: 1em;
 }
 
 @media only screen and (max-width: 685px) {
@@ -63,4 +79,5 @@ canvas{
     margin: 5px 0 5px 0;
     box-shadow: 0px 0px 40px -15px rgba(255, 255, 255, 0.97);
   }
+
 }
