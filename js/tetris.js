@@ -5,6 +5,10 @@ let ctx = canvas.getContext("2d")
 //Change size to elemtents than will display
 ctx.scale(20, 20)
 
+//colors for pieces
+let color = ["#f4a379", "#d9f2b0", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "#0d5159"]
+let topScore = 0
+
 function arenaSweep() {
     let rowCount = 1;
     for (i = 0; i < arena.length; i++) {
@@ -27,20 +31,6 @@ let piece = {
 const arena = createMatrix(12, 20);
 
 
-//this function detected if we touch the floor 
-function collide (arena, piece){
-    const [m, o, a] = [piece.matrix, piece.posY, piece.posX ];
-    for (let y =0; y < m.length; y++){
-        for (let x = 0; x < m[y].length; x++){
-            if (m[y][x] !== 0 &&
-                (arena[y + o] && arena [y + o][x + a]) !==0){
-                    return true;
-            }
-        }
-    }
-    return false;
-}
-
 function createMatrix(w, h) {
     const matrix = [];
     while (h != 0) {
@@ -55,14 +45,13 @@ function drawPiece(matrix, offsetX, offsetY) {
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] != 0) {
-                ctx.fillStyle = "#D2EA9C"
+                matrix[y][x] += 1
+                ctx.fillStyle = color[Math.floor(Math.random() * color.length)]
                 ctx.fillRect(x + offsetX, y + offsetY, 1, 1)
             }
         }
     }
 }
-
-
 
 /*This function create the 7 pieces of tetris
     PieceName -> A vowel to select one figure
@@ -128,16 +117,6 @@ function collide(arena, piece) {
         }
     }
     return false;
-}
-
-function createMatrix(w, h) {
-    const matrix = [];
-    while (h != 0) {
-        matrix.push(new Array(w).fill(0))
-        h--
-    }
-    return matrix;
-
 }
 
 //This fuction returns de posicion of the piece en the arena 
@@ -265,8 +244,12 @@ function update(time = 0) {
     requestAnimationFrame(update);
 }
 function updateScore() {
-    document.getElementById("score").innerText = piece.score;
+    document.getElementById("score").innerText = "Score: " + piece.score;
+    if (piece.score > topScore) {
+        document.getElementById("top").innerText = "Top: " + piece.score;
+    }
 }
+
 
 
 

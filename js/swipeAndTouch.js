@@ -43,7 +43,7 @@ let down = () => {
     pieceDrop();
 }
 let touch = () => {
-    console.log("Just Touch")
+    pieceRotate(-1)
 }
 
 //configs the elements on load
