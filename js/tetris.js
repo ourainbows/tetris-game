@@ -6,8 +6,10 @@ let ctx = canvas.getContext("2d")
 ctx.scale(20, 20)
 
 //colors for pieces
-let color = ["#f4a379", "#d9f2b0", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "#0d5159"]
+let color = ["#FFFF", "#f4a379", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "#0d5159"]
 let topScore = 0
+let piecesQuantity = []
+let colorPieces = []
 
 function arenaSweep() {
     let rowCount = 1;
@@ -24,7 +26,7 @@ function arenaSweep() {
 let piece = {
     posX: 0,
     posY: 0,
-    matrix:null,
+    matrix: null,
     score: 0,
 }
 
@@ -40,14 +42,26 @@ function createMatrix(w, h) {
     return matrix;
 
 }
+function newColor() {
+    let clr = color[Math.floor(Math.random() * color.length)]
+    colorPieces.push(clr)
+    return clr
+}
+
 //Offset parameters help to change the position of x and y where piece appears
 function drawPiece(matrix, offsetX, offsetY) {
     for (y = 0; y < matrix.length; y++) {
         for (x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] != 0) {
-                matrix[y][x] += 1
-                ctx.fillStyle = color[Math.floor(Math.random() * color.length)]
-                ctx.fillRect(x + offsetX, y + offsetY, 1, 1)
+                for (i = 0; i < piecesQuantity.length; i++) {
+                    let piece = piecesQuantity[i]
+                    if (matrix[y][x] == piece) {
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = colorPieces[i]
+                        ctx.fillStyle = colorPieces[i]
+                        ctx.fillRect(x + offsetX, y + offsetY, 0.9, 0.9)
+                    }
+                }
             }
         }
     }
@@ -168,19 +182,40 @@ function pieceMove(dir) {
         piece.posX -= dir;
 }
 
-function pieceReset() {
+
+function updateValuePiece() {
     const pieces = 'OITSZLJ';
-    piece.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    let newPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+    for (y = 0; y < newPiece.length; y++) {
+        for (x = 0; x < newPiece.length; x++) {
+            if (newPiece[x][y] != 0) {
+                newPiece[x][y] = piecesQuantity.length + 1
+
+            }
+        }
+    }
+    piecesQuantity.push(piecesQuantity.length + 1)
+    return newPiece
+}
+
+function pieceReset() {
+    newColor()
+    piece.matrix = updateValuePiece();
     piece.posY = 0;
     piece.posX = (arena[0].length / 2 | 0) -
         (piece.matrix[0].length / 2 | 0);
+    //User Lost
     if (collide(arena, piece)) {
         for (i = 0; i < arena.length; i++) {
             arena[i].fill(0)
-
+            dropInterval = 1000;
             piece.score = 0;
             updateScore();
+            piecesQuantity = []
+            colorPieces = []
+            
         }
+        pieceReset();
 
     }
 }
@@ -243,13 +278,31 @@ function update(time = 0) {
     draw();
     requestAnimationFrame(update);
 }
+
+
 function updateScore() {
     document.getElementById("score").innerText = "Score: " + piece.score;
     if (piece.score > topScore) {
         document.getElementById("top").innerText = "Top: " + piece.score;
     }
+    level()
 }
 
+function level() {
+    let score = piece.score
+    if (score > 30 && score < 50) {
+        dropInterval = 800
+    }
+    if (score > 50 && score < 80) {
+        dropInterval = 500
+    }
+    if (score > 80 && score < 100) {
+        dropInterval = 300
+    }
+    if (score > 100) {
+        dropInterval = 200
+    }
+}
 
 
 

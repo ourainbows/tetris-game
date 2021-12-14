@@ -7,12 +7,12 @@ html {
   font-size: 62.5%;
   font-family: "Russo One", sans-serif;
 }
-body{
-    background-image: url("../assets/background-tetris.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    background-color:#650066;
+body {
+  background-image: url("../assets/background-tetris.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  background-color: #650066;
 }
 
 main {
@@ -23,9 +23,10 @@ main {
 
 .canvas,
 .score,
-.nextPiece{
+.nextPiece {
   border: 5px solid rgb(255, 255, 255);
   border-radius: 5px;
+  box-shadow: 0px 0px 52px -7px rgba(255, 255, 255, 1);
 }
 
 .score,
@@ -42,8 +43,6 @@ main {
   flex-direction: column;
 }
 
-
-
 @media only screen and (max-width: 685px) {
   main {
     flex-direction: column;
@@ -52,11 +51,13 @@ main {
     padding-bottom: 1rem;
   }
   .score,
-  .nextPiece{
-    margin: 0 ;
+  .nextPiece {
+    margin: 0;
     width: 250px;
+    box-shadow: 0px 0px 40px -15px rgba(255, 255, 255, 0.97);
   }
-  .canvas{
+  .canvas {
     margin: 5px 0 5px 0;
+    box-shadow: 0px 0px 40px -15px rgba(255, 255, 255, 0.97);
   }
 }
