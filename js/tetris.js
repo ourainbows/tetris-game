@@ -6,14 +6,20 @@ let ctx = canvas.getContext("2d")
 ctx.scale(20, 20)
 
 //colors for pieces
-let color = ["#F23DE6", "#932CBF", "#F2E205", "#F28705", "#05F240", "#05C7F2", "red"]
+let color = ["#A6036D", "#932CBF", "#F2E205", "#F28705", "#05F240", "#05C7F2", "red"]
 let topScore = 0
 let piecesQuantity = []
 let colorPieces = []
-//song
-let song = document.getElementById("songTetris")
-song.loop = true
-song.volume = 0.2
+
+
+var audio = document.createElement("AUDIO")
+document.body.appendChild(audio);
+audio.src = "audio/Tetris_theme.ogg"
+
+document.body.addEventListener("keydown", function () {
+ 
+})
+
 
 function arenaSweep() {
     let rowCount = 1;
@@ -309,6 +315,9 @@ function level() {
 
 
 document.addEventListener("keydown", function (key) {
+    audio.loop = true
+    audio.volume = 0.1
+    audio.play()
     if (key.key == "ArrowUp") {
         //Piece.rotate
         pieceRotate(-1)
@@ -333,4 +342,3 @@ document.addEventListener("keydown", function (key) {
 pieceReset();
 updateScore();
 update();
-
