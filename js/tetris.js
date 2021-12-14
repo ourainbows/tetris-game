@@ -4,7 +4,16 @@ let ctx = canvas.getContext("2d")
 
 //Change size to elemtents than will display
 ctx.scale(20, 20)
-//this function makes the complete lines desapear and make the counter grow
+
+//colors for pieces
+let color = ["#FFFF", "#f4a379", "#a2d8d0", "#daadf4", "#f1a4b4", "#7e04f2", "red"]
+let topScore = 0
+let piecesQuantity = []
+let colorPieces = []
+//song
+let song = document.getElementById("songTetris")
+song.loop = true
+song.volume = 0.1
 
 function arenaSweep() {
     let rowCount = 1;
@@ -18,23 +27,48 @@ function arenaSweep() {
     }
 }
 
-//this function create the arena where we save the value of the pieces to save them in the canvas
-
-function createMatrix(width, height) {
-    let matrix = []
-    while (height != 0) {
-        matrix.push(new Array(width).fill(0))
-        height--
-    }
-    return matrix
-}
-
-
 let piece = {
     posX: 0,
     posY: 0,
     matrix: null,
     score: 0,
+}
+
+const arena = createMatrix(12, 20);
+
+
+function createMatrix(w, h) {
+    const matrix = [];
+    while (h != 0) {
+        matrix.push(new Array(w).fill(0))
+        h--
+    }
+    return matrix;
+
+}
+function newColor() {
+    let clr = color[Math.floor(Math.random() * color.length)]
+    colorPieces.push(clr)
+    return clr
+}
+
+//Offset parameters help to change the position of x and y where piece appears
+function drawPiece(matrix, offsetX, offsetY) {
+    for (y = 0; y < matrix.length; y++) {
+        for (x = 0; x < matrix[y].length; x++) {
+            if (matrix[y][x] != 0) {
+                for (i = 0; i < piecesQuantity.length; i++) {
+                    let piece = piecesQuantity[i]
+                    if (matrix[y][x] == piece) {
+                        ctx.shadowBlur = 10;
+                        ctx.shadowColor = colorPieces[i]
+                        ctx.fillStyle = colorPieces[i]
+                        ctx.fillRect(x + offsetX, y + offsetY, 0.9, 0.9)
+                    }
+                }
+            }
+        }
+    }
 }
 
 /*This function create the 7 pieces of tetris
@@ -89,12 +123,6 @@ function createPiece(pieceName) {
     }
 }
 
-
-
-
-const arena = createMatrix(12, 20);
-
-
 //this function detected if we touch the floor 
 function collide(arena, piece) {
     const [m, o, a] = [piece.matrix, piece.posY, piece.posX];
@@ -109,20 +137,7 @@ function collide(arena, piece) {
     return false;
 }
 
-
-//Offset parameters help to change the position of x and y where piece appears
-function drawPiece(matrix, offsetX, offsetY) {
-    for (y = 0; y < matrix.length; y++) {
-        for (x = 0; x < matrix[y].length; x++) {
-            if (matrix[y][x] != 0) {
-                ctx.fillStyle = "red"
-                ctx.fillRect(x + offsetX, y + offsetY, 1, 1)
-            }
-        }
-    }
-}
-
-//This function returns de posicion of the piece en the arena 
+//This fuction returns de posicion of the piece en the arena 
 function merge(arena, piece) {
     for (y = 0; y < piece.matrix.length; y++) {
         for (x = 0; x < piece.matrix[y].length; x++) {
@@ -132,8 +147,6 @@ function merge(arena, piece) {
         }
     }
 }
-
-
 // draw
 function draw() {
     // paint canvas
@@ -171,24 +184,44 @@ function pieceMove(dir) {
         piece.posX -= dir;
 }
 
-//This function choose the pieces randomly
-function pieceReset() {
+
+function updateValuePiece() {
     const pieces = 'OITSZLJ';
-    piece.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    let newPiece = createPiece(pieces[pieces.length * Math.random() | 0]);
+    for (y = 0; y < newPiece.length; y++) {
+        for (x = 0; x < newPiece.length; x++) {
+            if (newPiece[x][y] != 0) {
+                newPiece[x][y] = piecesQuantity.length + 1
+
+            }
+        }
+    }
+    piecesQuantity.push(piecesQuantity.length + 1)
+    return newPiece
+}
+
+function pieceReset() {
+    newColor()
+    piece.matrix = updateValuePiece();
     piece.posY = 0;
     piece.posX = (arena[0].length / 2 | 0) -
         (piece.matrix[0].length / 2 | 0);
+    //User Lost
     if (collide(arena, piece)) {
         for (i = 0; i < arena.length; i++) {
             arena[i].fill(0)
-
+            dropInterval = 1000;
             piece.score = 0;
             updateScore();
+            piecesQuantity = []
+            colorPieces = []
+            
         }
+        pieceReset();
 
     }
 }
-//THIS FUNCTION ROTATE THE PIECES 
+
 function pieceRotate(dir) {
 
     const pos = piece.posX;
@@ -205,7 +238,6 @@ function pieceRotate(dir) {
     }
 }
 
-//this function makes the matrix rotate in both ways
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; ++y) {
         for (let x = 0; x < y; ++x) {
@@ -230,7 +262,7 @@ function rotate(matrix, dir) {
 
 }
 
-//this function makes the piece take 1 sec to go down
+
 let dropCounter = 0;
 let dropInterval = 1000;
 
@@ -248,14 +280,35 @@ function update(time = 0) {
     draw();
     requestAnimationFrame(update);
 }
+
+
 function updateScore() {
-    document.getElementById("score").innerText = piece.score;
+    document.getElementById("score").innerText = "Score: " + piece.score;
+    if (piece.score > topScore) {
+        document.getElementById("top").innerText = "Top: " + piece.score;
+    }
+    level()
+}
+
+function level() {
+    let score = piece.score
+    if (score > 30 && score < 50) {
+        dropInterval = 800
+    }
+    if (score > 50 && score < 80) {
+        dropInterval = 500
+    }
+    if (score > 80 && score < 100) {
+        dropInterval = 300
+    }
+    if (score > 100) {
+        dropInterval = 200
+    }
 }
 
 
-// this function makes the game work with the keyboard
+
 document.addEventListener("keydown", function (key) {
-    console.log(key.key)
     if (key.key == "ArrowUp") {
         //Piece.rotate
         pieceRotate(-1)
@@ -280,3 +333,4 @@ document.addEventListener("keydown", function (key) {
 pieceReset();
 updateScore();
 update();
+
