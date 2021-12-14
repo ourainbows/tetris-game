@@ -4,6 +4,7 @@ let ctx = canvas.getContext("2d")
 
 //Change size to elemtents than will display
 ctx.scale(20, 20)
+//this function makes the complete lines desapear and make the counter grow
 
 function arenaSweep() {
     let rowCount = 1;
@@ -17,6 +18,7 @@ function arenaSweep() {
     }
 }
 
+//this function create the arena where we save the value of the pieces to save them in the canvas
 
 function createMatrix(width, height) {
     let matrix = []
@@ -31,7 +33,7 @@ function createMatrix(width, height) {
 let piece = {
     posX: 0,
     posY: 0,
-    matrix: createPiece("I"),
+    matrix: null,
     score: 0,
 }
 
@@ -107,15 +109,7 @@ function collide(arena, piece) {
     return false;
 }
 
-function createMatrix(w, h) {
-    const matrix = [];
-    while (h != 0) {
-        matrix.push(new Array(w).fill(0))
-        h--
-    }
-    return matrix;
 
-}
 //Offset parameters help to change the position of x and y where piece appears
 function drawPiece(matrix, offsetX, offsetY) {
     for (y = 0; y < matrix.length; y++) {
@@ -128,7 +122,7 @@ function drawPiece(matrix, offsetX, offsetY) {
     }
 }
 
-//This fuction returns de posicion of the piece en the arena 
+//This function returns de posicion of the piece en the arena 
 function merge(arena, piece) {
     for (y = 0; y < piece.matrix.length; y++) {
         for (x = 0; x < piece.matrix[y].length; x++) {
@@ -177,6 +171,7 @@ function pieceMove(dir) {
         piece.posX -= dir;
 }
 
+//This function choose the pieces randomly
 function pieceReset() {
     const pieces = 'OITSZLJ';
     piece.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
@@ -193,7 +188,7 @@ function pieceReset() {
 
     }
 }
-
+//THIS FUNCTION ROTATE THE PIECES 
 function pieceRotate(dir) {
 
     const pos = piece.posX;
@@ -210,6 +205,7 @@ function pieceRotate(dir) {
     }
 }
 
+//this function makes the matrix rotate in both ways
 function rotate(matrix, dir) {
     for (let y = 0; y < matrix.length; ++y) {
         for (let x = 0; x < y; ++x) {
@@ -233,6 +229,8 @@ function rotate(matrix, dir) {
     }
 
 }
+
+//this function makes the piece take 1 sec to go down
 let dropCounter = 0;
 let dropInterval = 1000;
 
@@ -255,7 +253,7 @@ function updateScore() {
 }
 
 
-
+// this function makes the game work with the keyboard
 document.addEventListener("keydown", function (key) {
     console.log(key.key)
     if (key.key == "ArrowUp") {
