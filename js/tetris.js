@@ -11,7 +11,10 @@ let topScore = 0
 let piecesQuantity = []
 let colorPieces = []
 //song
-document.getElementById("songTetris").loop = true
+let song = document.getElementById("songTetris")
+song.loop = true
+song.volume = 0.1
+console.log(song);
 
 function arenaSweep() {
     let rowCount = 1;
